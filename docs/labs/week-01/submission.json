@@ -1,15 +1,15 @@
 {
   "week": "week-01",
   "title": "Developer Environment & GitHub Repository Setup",
-  "status": "draft",
-  "originalRepoUrl": "",
-  "originalCommit": "",
-  "pullRequestUrl": "",
-  "submissionTag": "",
-  "testStatus": "not-tested",
-  "notes": "LAB 1 ใช้ evidence report ได้โดยไม่ต้องมี web application",
+  "status": "submitted",
+  "originalRepoUrl": "https://github.com/Mssuwimon/engse203-lab01-68543210046-7",
+  "originalCommit": "849a70f2817bf98ba54ce5aa6c0312c3335c7a32",
+  "pullRequestUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/pull/1",
+  "submissionTag": "lab-01-submission-v1",
+  "testStatus": "pass",
+  "notes": "รัน hello.js ผ่าน Node.js สำเร็จ แสดงผล Hello Suwimon พร้อมข้อมูล OS และ Node version",
   "pageUrl": "https://Mssuwimon.github.io/engse203-student-labs-68543210046/labs/week-01/",
   "sourceUrl": "https://github.com/Mssuwimon/engse203-student-labs-68543210046/tree/lab/week-01/labs/week-01/source",
   "hasPublish": false,
-  "sourceEntries": 0
+  "sourceEntries": 4
 }
