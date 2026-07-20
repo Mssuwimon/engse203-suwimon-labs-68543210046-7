@@ -1,15 +1,15 @@
 {
   "week": "week-03",
-  "title": "Responsive Web UI & Form Interaction",
-  "status": "draft",
-  "originalRepoUrl": "",
-  "originalCommit": "",
-  "pullRequestUrl": "",
-  "submissionTag": "",
-  "testStatus": "not-tested",
-  "notes": "Static site ต้องมี index.html ที่ publish root",
+  "title": "Week 03",
+  "status": "submitted",
+  "originalRepoUrl": "https://github.com/Mssuwimon/engse203-lab03-68543210046-7",
+  "originalCommit": "c11712813eafc18d81fb7015cda8f2e1b104d253",
+  "pullRequestUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/pull/3",
+  "submissionTag": "lab-03-submission-v1",
+  "testStatus": "pass",
+  "notes": "Migrated from original lab 03 repository",
   "pageUrl": "https://Mssuwimon.github.io/engse203-student-labs-68543210046/labs/week-03/",
   "sourceUrl": "https://github.com/Mssuwimon/engse203-student-labs-68543210046/tree/lab/week-03/labs/week-03/source",
   "hasPublish": false,
-  "sourceEntries": 0
+  "sourceEntries": 9
 }
