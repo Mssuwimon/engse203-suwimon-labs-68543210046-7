@@ -12,6 +12,8 @@ function RequestForm({ onAddRequest }) {
   const [errors, setErrors] = useState({});
   const [feedback, setFeedback] = useState('');
 
+  console.log("สถานะฟอร์มตอนนี้ (TC-02):", formData);
+
   function handleChange(event) {
     const { name, value } = event.target;
 
