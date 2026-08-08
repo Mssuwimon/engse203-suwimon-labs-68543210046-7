@@ -1,4 +1,5 @@
-{
+
+ {
   "week": "week-01",
   "title": "Developer Environment & GitHub Repository Setup",
   "status": "submitted",
@@ -9,3 +10,4 @@
   "testStatus": "pass",
   "notes": "รัน hello.js ผ่าน Node.js สำเร็จ แสดงผล Hello Suwimon พร้อมข้อมูล OS และ Node version"
 }
+
