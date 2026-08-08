@@ -17,7 +17,7 @@ function RequestForm({ onAddRequest }) {
 
     setFormData({
       ...formData,
-      value,
+      [name]: value, // แก้ไขตรงนี้: ใช้ [name] เพื่อให้ตรงกับช่อง input ที่ถูกพิมพ์
     });
   }
 
@@ -27,23 +27,19 @@ function RequestForm({ onAddRequest }) {
     const newErrors = {};
 
     if (formData.requesterName.trim().length < 2) {
-      newErrors.requesterName =
-        'กรุณากรอกชื่ออย่างน้อย 2 ตัวอักษร';
+      newErrors.requesterName = 'กรุณากรอกชื่ออย่างน้อย 2 ตัวอักษร';
     }
 
     if (!formData.requestType) {
-      newErrors.requestType =
-        'กรุณาเลือกประเภทคำร้อง';
+      newErrors.requestType = 'กรุณาเลือกประเภทคำร้อง';
     }
 
     if (!formData.location.trim()) {
-      newErrors.location =
-        'กรุณากรอกสถานที่';
+      newErrors.location = 'กรุณากรอกสถานที่';
     }
 
     if (formData.details.trim().length < 10) {
-      newErrors.details =
-        'รายละเอียดต้องอย่างน้อย 10 ตัวอักษร';
+      newErrors.details = 'รายละเอียดต้องอย่างน้อย 10 ตัวอักษร';
     }
 
     setErrors(newErrors);
