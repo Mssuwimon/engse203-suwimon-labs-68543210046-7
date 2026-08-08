@@ -48,7 +48,6 @@ function RequestForm({ onAddRequest }) {
       return;
     }
 
-    // TODO LAB4-R05–R07: validate controlled state แล้วเรียก onAddRequest
     onAddRequest(formData);
 
     setFeedback('คำร้องถูกเพิ่มเรียบร้อยแล้ว');

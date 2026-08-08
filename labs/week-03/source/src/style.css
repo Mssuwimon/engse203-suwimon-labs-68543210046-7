@@ -1,4 +1,3 @@
-/* TODO: CSS foundation, mobile-first layout, form controls, focus, errors */
 *,
 *::before,
 *::after {
@@ -287,10 +286,12 @@ button:hover {
   width: fit-content;
   margin-top: 0.5rem;
 }
-
 .request-list li.approved {
-  background-color: #e6f4ea; /* เปลี่ยนพื้นหลังเป็นสีเขียวอ่อน */
-  border-color: #57bb8a; /* เปลี่ยนสีขอบเป็นสีเขียว */
+  background-color: #e6f4ea;
+  border-color: #57bb8a;
+}
+.request-list li.approved strong {
+  color: #157347;
 }
 
 .stage {
