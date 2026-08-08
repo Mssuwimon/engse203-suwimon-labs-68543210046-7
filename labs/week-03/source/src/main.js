@@ -1,18 +1,14 @@
 const form = document.querySelector("#request-form");
 const status = document.querySelector("#form-status");
 const details = document.querySelector("#details-count");
-
 // TODO 1: query preview/status/list elements
 const previewName = document.querySelector("#preview-name");
 const previewType = document.querySelector("#preview-type");
 const previewDetails = document.querySelector("#preview-details");
 const requestList = document.querySelector("#request-list");
-
-// Variables for counting
 let total = 0;
 let pending = 0;
 let approved = 0;
-
 const count = {
   total: document.querySelector("#total-count"),
   pending: document.querySelector("#pending-count"),
@@ -20,10 +16,9 @@ const count = {
 };
 
 // TODO 2: readForm()
-function readForm(formElement) {
-  return Object.fromEntries(new FormData(formElement).entries());
+function readForm(form) {
+  return Object.fromEntries(new FormData(form).entries());
 }
-
 // TODO 3: renderPreview(data)
 function renderPreview(data) {
   const requesterName = (data.requesterName || "").trim();
@@ -33,11 +28,8 @@ function renderPreview(data) {
   previewName.textContent = requesterName || "ยังไม่ระบุชื่อ";
   previewType.textContent = requestType || "ยังไม่เลือกประเภท";
   previewDetails.textContent = detailsContent || "ยังไม่มีรายละเอียด";
-  
-  // Count characters
-  details.textContent = `${detailsContent.length} ตัวอักษร`; 
+  details.textContent = `${(data.details || "").length} ตัวอักษร`; // ป้องกัน error ถ้า details เป็น undefined
 }
-
 // TODO 4: validate(data)
 function validate(data) {
   const errors = {};
@@ -56,94 +48,85 @@ function validate(data) {
 
   return errors;
 }
-
 // TODO 5: renderErrors(errors)
 function renderErrors(errors) {
   for (const name of ["requesterName", "requestType", "details"]) {
     const field = form.elements[name];
+    // const field = document.querySelector(`[name="${name}"]`);
     const output = document.querySelector(`#${name}-error`);
     const message = errors[name] ?? "";
 
-    if (output && field) {
-        output.textContent = message;
-        field.setAttribute("aria-invalid", String(Boolean(message)));
-    }
+    output.textContent = message;
+    field.setAttribute("aria-invalid", String(Boolean(message)));
   }
 }
 
-// Live Preview Event
 form.addEventListener("input", (event) => {
-  const data = readForm(event.currentTarget);
+  // currentTarget คือ form; target คือ input/select/textarea ที่เปลี่ยน
+  const data = Object.fromEntries(new FormData(event.currentTarget).entries());
   renderPreview(data);
 });
 
-// Form Submit Event
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   handleSubmit(event.currentTarget);
 });
 
 // TODO 6: input and submit listeners
-function handleSubmit(formElement) {
-  const data = readForm(formElement);
+function handleSubmit(form) {
+  const data = readForm(form);
   const errors = validate(data);
-  
   renderErrors(errors);
-  
   if (Object.keys(errors).length > 0) {
     renderStatus("invalid", "กรุณาตรวจสอบข้อมูลที่ระบุ");
     return;
   }
-  
   addRequest(data);
   renderStatus("success", "บันทึกคําขอเรียบร้อย");
-  formElement.reset();
-  renderPreview(readForm(formElement)); // Reset preview
+  form.reset();
+  renderPreview(readForm(form));
 }
 
 function renderStatus(state, message) {
-  if (status) {
-    status.dataset.state = state;
-    status.textContent = message;
-  }
+  status.dataset.state = state;
+  status.textContent = message;
 }
 
 function addRequest(data) {
   const item = document.createElement("li");
   const title = document.createElement("strong");
-  const detailsDesc = document.createElement("span");
-  
+  const details = document.createElement("span");
   title.textContent = `${data.requesterName} • ${data.requestType}`;
-  detailsDesc.textContent = data.details;
+  details.textContent = data.details;
 
   const approveBtn = document.createElement("button");
   approveBtn.textContent = "Approve";
-  approveBtn.type = "button"; 
+  approveBtn.type = "button"; // เพื่อป้องกันไม่ให้ทำงานเป็น Submit
 
   approveBtn.addEventListener("click", () => {
-    pending--; 
-    approved++; 
+    pending--; // ลดจำนวนที่รอดำเนินการ
+    approved++; // เพิ่มจำนวนที่อนุมัติแล้ว (อิงตามชื่อตัวแปร "append" ในโค้ดเดิมของคุณ)
+
+    // อัปเดตตัวเลขบนหน้าจอ (เรียกฟังก์ชันสำหรับอัปเดต DOM)
     updateStage();
 
+    // ปิดการใช้งานปุ่มหลังจากกดแล้ว เพื่อไม่ให้กดซ้ำได้
     approveBtn.disabled = true;
-    approveBtn.remove(); // Remove button after clicked
+    approveBtn.remove();
     item.classList.add("approved");
   });
 
-  item.append(title, detailsDesc, approveBtn);
+  item.append(title, details, approveBtn);
   requestList.prepend(item);
-  
   total++;
   pending++;
   updateStage();
 }
 
 function updateStage() {
-  if (count.total && count.pending && count.approved) {
-      count.total.textContent = total;
-      count.pending.textContent = pending;
-      count.approved.textContent = approved;
-  }
+  count.total.textContent = total;
+  count.pending.textContent = pending;
+  count.approved.textContent = approved;
 }
 
 console.log("LAB 3 starter ready", form);
