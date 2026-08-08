@@ -10,7 +10,7 @@
 
 - Repository: https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7
 - Pull Request: https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/pull/7
-- GitHub Pages: https://Mssuwimon.github.io/engse203-student-labs-68543210046/
+- GitHub Pages: https://mssuwimon.github.io/engse203-suwimon-labs-68543210046-7/
 
 ## Component Tree
 
