@@ -13,13 +13,13 @@ function RequestForm({ onAddRequest }) {
   const [feedback, setFeedback] = useState('');
 
   function handleChange(event) {
-    const { name, value } = event.target;
+  const { name, value } = event.target;
 
-    setFormData({
-      ...formData,
-      value,
-    });
-  }
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+}
 
   function handleSubmit(event) {
     event.preventDefault();

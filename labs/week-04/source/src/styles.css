@@ -49,8 +49,7 @@ form > button, .filter-active { border: 0; border-radius: .6rem; padding: .65rem
 
 /* TODO LAB4-R12: เพิ่ม focus-visible, aria-invalid และ state/badge styles */
 /* LAB4-R12 */
-
-/* TODO LAB4-R12: เพิ่ม focus-visible, aria-invalid และ state/badge styles */
+ 
 
 button:focus-visible,
 input:focus-visible,
