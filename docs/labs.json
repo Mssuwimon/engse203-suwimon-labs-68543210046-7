@@ -118,5 +118,20 @@
   "sourceUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/tree/main/labs/week-07/source",
   "hasPublish": true,
   "sourceEntries": 16
+},
+{
+  "week": "week-09",
+  "title": "Relational Database & SQL (SQLite)",
+  "status": "submitted",
+  "originalRepoUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7",
+  "originalCommit": "",
+  "pullRequestUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/pull/15",
+  "submissionTag": "lab-09-submission-v1",
+  "testStatus": "pass",
+  "notes": "Relational Database Design (1:N), SQLite Schema & Constraints, SQL Queries, Data Modeling, Constraint Testing และ Challenge ครบถ้วน",
+  "pageUrl": "https://Mssuwimon.github.io/engse203-suwimon-labs-68543210046-7/labs/week-09/",
+  "sourceUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/tree/lab/week-09/labs/week-09/source",
+  "hasPublish": false,
+  "sourceEntries": 30
 }
 ]
