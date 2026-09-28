@@ -14,4 +14,8 @@ week-NN/
 - แก้ source ใน `source/`
 - ห้ามใส่ `.git`, `node_modules`, secret หรือ `.env`
 - ใช้ `npm run import:source` และ `npm run import:publish` เพื่อลดความผิดพลาดจากการ copy
+<<<<<<< HEAD
 - `publish/` เป็น input ของ Pages ส่วน `docs/` เป็น generated output
+=======
+- `publish/` เป็น input ของ Pages ส่วน `docs/` เป็น generated output
+>>>>>>> d3f98ec810e32bc614d79a1891b4f2bfe8080fd9
