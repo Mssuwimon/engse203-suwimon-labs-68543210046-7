@@ -73,7 +73,7 @@ describe('POST /api/requests', () => {
 
 describe('PUT /api/requests/:id', () => {
   test('เปลี่ยนสถานะถูกต้อง → 200 และสถานะเปลี่ยนไป', async () => {
-    // ยิงคำสั่งเปลี่ยนสถานะเป็น done
+    // ยิงคำสั่งเปลี่ยนสถานะเป็น completed
     const r1 = await request(app).put('/api/requests/REQ-001').send({ status: 'completed' });
     expect(r1.status).toBe(200);
     
@@ -90,7 +90,7 @@ describe('PUT /api/requests/:id', () => {
 });
 
 describe('DELETE /api/requests/:id', () => {
-  test('ลบสำเร็จ → 200 และดึงข้อมูลซ้ำต้องได้ 404', async () => {
+  test('ลบสำเร็จ → 204 และดึงข้อมูลซ้ำต้องได้ 404', async () => {
     // ยิงคำสั่งลบ
     const r1 = await request(app).delete('/api/requests/REQ-001');
     expect(r1.status).toBe(204);
@@ -98,5 +98,26 @@ describe('DELETE /api/requests/:id', () => {
     // GET ซ้ำ ต้องไม่เจอแล้ว (ต้องได้ 404 Not Found)
     const r2 = await request(app).get('/api/requests/REQ-001');
     expect(r2.status).toBe(404);
+  });
+});
+
+// 📝 CP47: Regression Test สำหรับดักจับบั๊กเก่าไม่ให้กลับมาเป็นซ้ำ
+describe('Regression Tests (BUG_REPORTS)', () => {
+  test('BUG #3: PUT สถานะคำร้องที่ไม่มีอยู่ ต้องได้ 404 (ไม่พัง 500)', async () => {
+    // จำลองการเปลี่ยนสถานะของ REQ-999 ซึ่งไม่มีอยู่ในระบบ (ตามคำใบ้ใน BUG_REPORTS.md)
+    const r = await request(app).put('/api/requests/REQ-999').send({ status: 'completed' });
+    
+    // คาดหวังว่าระบบต้องไม่แครช (500) แต่ต้องฟ้องว่าไม่พบข้อมูล (404)
+    expect(r.status).toBe(404);
+  });
+  test('BUG #1: ลบคำร้องแล้วเพิ่มใหม่ ต้องไม่พัง 500', async () => {
+    // 1. เจ้าหน้าที่ลบคำร้องทิ้งไป 1 รายการ
+    await request(app).delete('/api/requests/REQ-001');
+    
+    // 2. นักศึกษาส่งคำร้องใหม่เข้ามา
+    const r = await request(app).post('/api/requests').send(valid);
+    
+    // 3. ระบบต้องสร้างคำร้องได้สำเร็จ (201) โดยไม่เกิด Error 500
+    expect(r.status).toBe(201);
   });
 });

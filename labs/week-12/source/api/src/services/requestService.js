@@ -95,11 +95,19 @@ export function findById(id) {
   return db.prepare(`${SELECT_SHAPE} WHERE r.id = ?`).get(id) ?? null;
 }
 
-/** สร้างรหัสคำร้องถัดไป เช่น REQ-006 */
+/** สร้างรหัสคำร้องถัดไป (แก้ BUG #1 แล้ว: ใช้เลข ID ล่าสุดแทนการนับจำนวน) */
 function nextId() {
-  // รหัสถัดไป = จำนวนคำร้องที่มีอยู่ + 1  (ปรับให้เรียบง่ายขึ้นในรุ่นนี้)
-  const { total } = db.prepare('SELECT COUNT(*) AS total FROM requests').get();
-  return `REQ-${String(total + 1).padStart(3, '0')}`;
+  // 1. ดึง ID ล่าสุด (มากที่สุด) ออกมา 
+  const row = db.prepare('SELECT id FROM requests ORDER BY id DESC LIMIT 1').get();
+  
+  // 2. ถ้าเพิ่งเริ่มใช้ระบบ (ยังไม่มีข้อมูล) ให้เริ่มที่ REQ-001
+  if (!row) return 'REQ-001';
+  
+  // 3. ตัดเอาเฉพาะตัวเลขด้านหลังคำว่า 'REQ-' มาแปลงเป็นตัวเลข
+  const lastNumber = parseInt(row.id.replace('REQ-', ''), 10);
+  
+  // 4. เอาตัวเลขนั้นมา +1 แล้วประกอบกลับเป็นรูปแบบเดิม
+  return `REQ-${String(lastNumber + 1).padStart(3, '0')}`;
 }
 
 /**
@@ -111,7 +119,7 @@ function resolveUserId(name) {
   if (found) return found.id;
   const slug = Date.now().toString(36);
   return db.prepare('INSERT INTO users (name, department, email) VALUES (?, ?, ?)')
-           .run(name, 'ไม่ระบุ', `user-${slug}@rmutl.ac.th`).lastInsertRowid;
+            .run(name, 'ไม่ระบุ', `user-${slug}@rmutl.ac.th`).lastInsertRowid;
 }
 
 export function create(input) {
