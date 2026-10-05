@@ -71,11 +71,32 @@ describe('POST /api/requests', () => {
   });
 });
 
-// 🏫 TODO W12-INTEG (CP46): เพิ่ม test ของ PUT และ DELETE
-//   - PUT เปลี่ยนสถานะ → 200 และค่าใหม่ถูกบันทึก
-//   - PUT สถานะนอกรายการ → 400
-//   - DELETE แล้ว GET ซ้ำ → 404
-//   แล้วรัน npm run coverage → ดูว่าไฟล์ไหน/บรรทัดไหนยังไม่มี test วิ่งผ่าน
+describe('PUT /api/requests/:id', () => {
+  test('เปลี่ยนสถานะถูกต้อง → 200 และสถานะเปลี่ยนไป', async () => {
+    // ยิงคำสั่งเปลี่ยนสถานะเป็น done
+    const r1 = await request(app).put('/api/requests/REQ-001').send({ status: 'completed' });
+    expect(r1.status).toBe(200);
+    
+    // ต้องดึงข้อมูล (GET) มาเช็คซ้ำว่าในระบบถูกอัปเดตเป็นค่าใหม่แล้วจริงๆ
+    const r2 = await request(app).get('/api/requests/REQ-001');
+    expect(r2.body.status).toBe('completed');
+  });
 
-// 🏫 TODO W12-DEBUG (CP47): regression test ของ bug จาก BUG_REPORTS.md
-//   เขียน test ที่ "ทำซ้ำอาการ" ก่อน → ต้อง fail → แก้โค้ด → test ผ่าน
+  test('สถานะนอกรายการ → 400', async () => {
+    // ลองส่งสถานะแปลกๆ ที่ไม่มีในระบบ
+    const r = await request(app).put('/api/requests/REQ-001').send({ status: 'reject' });
+    expect(r.status).toBe(400);
+  });
+});
+
+describe('DELETE /api/requests/:id', () => {
+  test('ลบสำเร็จ → 200 และดึงข้อมูลซ้ำต้องได้ 404', async () => {
+    // ยิงคำสั่งลบ
+    const r1 = await request(app).delete('/api/requests/REQ-001');
+    expect(r1.status).toBe(204);
+    
+    // GET ซ้ำ ต้องไม่เจอแล้ว (ต้องได้ 404 Not Found)
+    const r2 = await request(app).get('/api/requests/REQ-001');
+    expect(r2.status).toBe(404);
+  });
+});

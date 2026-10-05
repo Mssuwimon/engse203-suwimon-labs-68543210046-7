@@ -26,11 +26,13 @@ export function updateRequestStatus(req, res) {
   if (!isValidStatus(status)) {
     return res.status(400).json({ error: 'สถานะต้องเป็น pending, in-progress หรือ completed' });
   }
+  
   const updated = service.updateStatus(req.params.id, status);
-  console.log(`[status] ${updated.id} → ${updated.status}`);   // บันทึกการเปลี่ยนสถานะ
   if (!updated) {
     return res.status(404).json({ error: `ไม่พบคำร้องรหัส ${req.params.id}` });
   }
+  
+  console.log(`[status] ${updated.id} → ${updated.status}`);   // ย้ายลงมาตรงนี้แล้ว ปลอดภัย!
   res.status(200).json(updated);
 }
 
